@@ -21,7 +21,8 @@ def blog_category(request, category):
     )
 
     context = {
-        'posts': posts
+        'posts': posts,
+        'category': category
     }
 
     return render(request, 'blog_category.html', context)
@@ -32,7 +33,7 @@ def blog_detail(request, pk):
 
     form = CommentForm()
     if request.method == 'POST':
-        form = CommentForm(request.Post)
+        form = CommentForm(request.POST)
         if form.is_valid():
             comment = Comment(
                 author=form.cleaned_data["author"],
@@ -43,9 +44,8 @@ def blog_detail(request, pk):
 
     comments = Comment.objects.filter(post=post)
     context = {
-        'post': post,
-        'comments': comments,
-        'form': form,
+        "post": post,
+        "comments": comments,
+        "form": form,
     }
-
-    return render(request, 'blog_detail.html', context)
+    return render(request, "blog_detail.html", context)
